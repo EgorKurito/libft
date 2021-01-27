@@ -3,85 +3,107 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hanguy <hanguy@student.21-school.ru>       +#+  +:+       +#+         #
+#    By: resther <resther@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/30 13:32:33 by hanguy            #+#    #+#              #
-#    Updated: 2020/04/30 13:32:37 by hanguy           ###   ########.fr        #
+#    Updated: 2021/01/17 17:59:47 by resther          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
-HEADER = libft.h
+HEADER = includes/libft.h
 FLAG = -Wall -Wextra -Werror
 OPTION = -c
-SOURCE = /source/
 
-SRCS = ft_strlen.c \
-	ft_memset.c \
-	ft_bzero.c \
-	ft_memcpy.c \
-	ft_memccpy.c \
-	ft_memmove.c \
-	ft_memchr.c \
-	ft_memcmp.c \
-	ft_strlcpy.c \
-	ft_strlcat.c \
-	ft_strchr.c \
-	ft_strrchr.c \
-	ft_atoi.c \
-	ft_isalpha.c \
-	ft_isdigit.c \
-	ft_isalnum.c \
-	ft_isascii.c \
-	ft_isprint.c \
-	ft_toupper.c \
-	ft_tolower.c \
-	ft_strnstr.c \
-	ft_strncmp.c \
-	ft_calloc.c \
-	ft_strdup.c \
-	ft_substr.c \
-	ft_strjoin.c \
-	ft_strtrim.c \
-	ft_split.c \
-	ft_itoa.c \
-	ft_strmapi.c \
-	ft_putchar_fd.c \
-	ft_putstr_fd.c \
-	ft_putendl_fd.c \
-	ft_putnbr_fd.c
-OBJ = $(SRCS:.c=.o)
+S_SRCS = ft_strlen \
+	ft_memset \
+	ft_bzero \
+	ft_memcpy \
+	ft_memccpy \
+	ft_memmove \
+	ft_memchr \
+	ft_memcmp \
+	ft_strlcpy \
+	ft_strlcat \
+	ft_strchr \
+	ft_strrchr \
+	ft_atoi \
+	ft_atol \
+	ft_isalpha \
+	ft_isdigit \
+	ft_isalnum \
+	ft_isascii \
+	ft_isprint \
+	ft_toupper \
+	ft_tolower \
+	ft_strnstr \
+	ft_strncmp \
+	ft_calloc \
+	ft_strdup \
+	ft_substr \
+	ft_strjoin \
+	ft_strtrim \
+	ft_split \
+	ft_split_once \
+	ft_itoa \
+	ft_strmapi \
+	ft_putchar_fd \
+	ft_putstr_fd \
+	ft_putendl_fd \
+	ft_putnbr_fd \
+	get_next_line \
+	ft_space \
+	ft_num_len \
+	ft_cub_atoi \
+	ft_lstnew \
+	ft_lstadd_front \
+	ft_lstsize \
+	ft_lstlast \
+	ft_lstadd_back \
+	ft_lstdelone \
+	ft_lstclear \
+	ft_lstiter \
+	ft_lstmap \
+	ft_strcpy_bonus \
+	ft_strcat_bonus \
+	ft_abs_bonus \
+	ft_char_count \
+	ft_strcmp \
+	ft_strjoin_delimiter \
+	ft_haschr \
+	ft_strjoin_doublefree \
+	ft_strjoin_free \
+	ft_putstr \
+	ft_putchar \
+	ft_strnew \
+	ft_strndup \
+	ft_hasnchar \
+	is_num		\
+	ft_strpbkr
 
-SRCS_BONUS = ft_lstnew.c \
-	ft_lstadd_front.c \
-	ft_lstsize.c \
-	ft_lstlast.c \
-	ft_lstadd_back.c \
-	ft_lstdelone.c \
-	ft_lstclear.c \
-	ft_lstiter.c \
-	ft_lstmap.c \
-	ft_strcpy_bonus.c \
-	ft_strcat_bonus.c \
-	ft_abs_bonus.c
-OBJ_BONUS = $(SRCS_BONUS:.c=.o)
+SS_SRCS = $(addsuffix .c, $(S_SRCS))
+SRCS = $(addprefix src/, $(SS_SRCS))
+
+OBJS = $(SRCS:.c=.o)
+
+BIN = $(addsuffix .o, $(SRCS))
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	ar -rcs $(NAME) $(OBJ)
+$(NAME): $(OBJS)
+	@ar rc $(NAME) $(OBJS)
+	@echo "$(NAME) created"
+	@ranlib $(NAME)
+	@echo "$(NAME) indexed"
 
 %.o: %.c $(HEADER)
-	gcc -Wall -Wextra -Werror -c $<
-
-bonus:	$(OBJ) $(OBJ_BONUS)
-	ar -rcs $(NAME) $(OBJ) $(OBJ_BONUS)
+	@gcc -c -Wall -Werror -Wextra -I includes/ $< -o $@
 
 clean:
-	/bin/rm -f $(OBJ) $(OBJ_BONUS)
+	@rm -f $(OBJS)
 
 fclean: clean
-	/bin/rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
 
